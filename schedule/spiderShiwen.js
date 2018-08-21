@@ -3,22 +3,25 @@
  * 爬取古诗文网站 使用es6语法 使用Generator控制流程
  * 2016年04月13日19:06:20
  */
-import 'babel-polyfill';
-const [cheerio, co, superagent, commonConfig, process, shell, querystring, bagpipe] =
-    [require('cheerio'), require('co'), require('superagent'), require('../config/config_dev'),
-        require('process'), require('shelljs'), require('querystring'), require('bagpipe')]; //数组的解构赋值
-const util = require('util');
+const cheerio = require('cheerio');
+const fetch = require('fetch');
+const config = require('../config/config');
+const process = require('process');
+const shelljs = require('shelljs');
+const querystring = require('querystring');
+
 const spiderDB = require('./spiderDB');
 
-var dynastyOptions = {
+var commandOptions = {
     alias : 'dynasty',
     demand: true,
     default: '魏晋',
     describe: '朝代名称'
 };
+
 //设置帮助提示
 var argv = require('yargs')
-    .option('d', dynastyOptions)
+    .option('d', commandOptions)
     .usage('Usage: node -d dynastyName')
     .example('node spiderShiwen -d 魏晋')
     .help('h')
